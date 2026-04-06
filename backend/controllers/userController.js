@@ -88,7 +88,7 @@ export async function updatePassword(req, res) {
 
     res.status(200).json({
         success:true,
-        message:"Password changed";
+        message:"Password changed"
     })
     
   } catch (error) {
