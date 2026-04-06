@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import {connectDB} from "./config/db.js";
-import route from "./routes/userRoute.js";
+import userRoute from "./routes/userRoute.js";
 
 const app=express();
 
@@ -17,7 +17,7 @@ app.use(express.urlencoded({extended:true}));
 // call Db
 connectDB();
 
-app.use("/api/auth",route);
+app.use("/api/user",userRoute);
 
 app.get("/",(req,res)=>{
     res.send("all working");
