@@ -16,7 +16,7 @@ export const createTask = async (req, res) => {
     const saved = await task.save();
     res.status(200).json({ success: true, task: saved });
   } catch (error) {
-    res.status(500).json({ success: false, message: err.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -29,7 +29,7 @@ export const getTask = async (req, res) => {
     });
     res.json({ success: true, tasks });
   } catch (error) {
-    res.status(500).json({ success: false, message: err.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -44,7 +44,7 @@ export const getTaskById = async (req, res) => {
         .json({ success: false, message: "Task not found" });
     res.json({ success: true, task });
   } catch (error) {
-    res.status(500).json({ success: false, message: err.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -60,19 +60,19 @@ export const updateTask = async (req, res) => {
     const updated = await Task.findOneAndUpdate(
       { _id: req.params.id, owner: req.user.id },
       data,
-      { new: true, runValidators: true },
+      { returnDocument: 'after', runValidators: true },
     );
 
     if (!updated) {
       return res.status(404).json({
         success: false,
-        message: "Task not found or nt yours",
+        message: "Task not found or not yours",
       });
     }
 
     res.json({ success: true, task: updated });
   } catch (error) {
-    res.status(500).json({ success: false, message: err.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -80,17 +80,19 @@ export const updateTask = async (req, res) => {
 
 export const deleteTask = async (req, res) => {
   try {
-    const delted = await Task.findOneAndDelete({
-      _id: req.param.id,
+    const deleted = await Task.findOneAndDelete({
+      _id: req.params.id,
       owner: req.user.id,
     });
-
-    if (!delted) {
+    
+    if (!deleted) {
       return res
         .status(404)
         .json({ status: false, message: "Task not found and not yours" });
     }
+
+    res.status(200).json({ success: true, message: "task deleted" });
   } catch (error) {
-    res.status(500).json({ success: false, message: err.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };

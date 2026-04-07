@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import {connectDB} from "./config/db.js";
 import userRoute from "./routes/userRoute.js";
+import taskRoute from "./routes/taskRoute.js";
 
 const app=express();
 
@@ -17,8 +18,11 @@ app.use(express.urlencoded({extended:true}));
 // call Db
 connectDB();
 
+//Routes
 app.use("/api/user",userRoute);
+app.use("/api/tasks",taskRoute);
 
+//Test route
 app.get("/",(req,res)=>{
     res.send("all working");
 });

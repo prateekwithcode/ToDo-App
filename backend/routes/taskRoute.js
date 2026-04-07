@@ -6,16 +6,16 @@ import {
   getTask,
   getTaskById,
   updateTask,
-} from "../controllers/taskController";
+} from "../controllers/taskController.js";
 const taskRoute = express.Router();
 
 taskRoute
-  .route("/td")
+  .route("/get-me")
   .get(authMiddleware, getTask)
   .post(authMiddleware, createTask);
 
 taskRoute
-  .route("/:id/td")
+  .route("/:id/get-me")
   .get(authMiddleware, getTaskById)
   .put(authMiddleware, updateTask)
   .delete(authMiddleware, deleteTask);
