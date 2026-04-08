@@ -10,12 +10,12 @@ import {
 const taskRoute = express.Router();
 
 taskRoute
-  .route("/get-me")
+  .route("/")
   .get(authMiddleware, getTask)
   .post(authMiddleware, createTask);
 
 taskRoute
-  .route("/:id/get-me")
+  .route("/:id")
   .get(authMiddleware, getTaskById)
   .put(authMiddleware, updateTask)
   .delete(authMiddleware, deleteTask);
